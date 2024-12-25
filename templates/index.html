@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pune Hospital Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Pune Hospital Finder</h1>
+        <form action="/get_path" method="POST">
+            <label for="location">Select your location:</label>
+            <select id="location" name="location">
+                {% for key, value in locations.items() %}
+                    <option value="{{ key }}">{{ value[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Find Nearest Hospital</button>
+        </form>
+
+        {% if map_html %}
+        <div class="map-container">
+            <h3>Nearest Hospital: {{ hospital_name }}</h3>
+            <p>Distance: {{ distance | round(2) }} meters</p>
+            <div>{{ map_html | safe }}</div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
